@@ -1,3 +1,8 @@
+## 组件
+
+- bigview（Node.js）视图的基类
+- biglet（Node.js）模块的基类
+- bigview.js（前端引用）
 
 ## 特性
 
