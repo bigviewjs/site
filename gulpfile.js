@@ -20,7 +20,7 @@ gulp.task('generate', function () {
 	}	
 })
 
-gulp.task('show', ['generate'], function () {
+gulp.task('show', ['generate', 'watch'], function () {
   if (exec('browser-sync start --server _docs --open --no-notify').code !== 0) {
 	  echo('Error: generate.sh exec failed')
 	  exit(1)
@@ -28,6 +28,10 @@ gulp.task('show', ['generate'], function () {
   
   console.log('show')
 })
+
+gulp.task('watch', function () {
+    gulp.watch('*.md', ['generate']);
+});
 
 gulp.task('default', ['generate', 'deploy'] , function () {
   console.log('default')
