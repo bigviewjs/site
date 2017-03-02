@@ -87,13 +87,21 @@
                   
                   
                   <li>
-                      <a href="#生命周期">生命周期</a>
+                      <a href="#核心">核心</a>
                   </li>
                   
                   
                   
                   
                   <ul class="nav docs-sidenav-extend">
+                  
+                      <li>
+                          <a href="#渲染模式">渲染模式</a>
+                      </li>
+                  
+                  
+                  
+                  
                   
                       <li>
                           <a href="#生命周期">生命周期</a>
@@ -178,12 +186,20 @@
               <div class="docs-section">
                   
                   
-                  <h2 id="生命周期" class="page-header">生命周期</h2>
+                  <h2 id="核心" class="page-header">核心</h2>
                   
                   
                   
                   <div>
-                      <h2 id="生命周期">生命周期</h2><p>bigview的生命周期</p>
+                      <h2 id="渲染模式">渲染模式</h2><p>支持5种bigpipe渲染模式</p>
+<ul>
+<li>parallel.js   并行模式， 先写布局，并行请求，但在获得所有请求的结果后再渲染</li>
+<li>pipeline.js  (默认) 管线模式：即并行模式， 先写布局，并行请求，并即时渲染</li>
+<li>reduce.js    顺序模式： 先写布局，按照pagelet加入顺序，依次执行，写入</li>
+<li>reducerender.js 先写布局，然后顺序执行，在获得所有请求的结果后再渲染</li>
+<li>render.js 一次渲染模式：即普通模式，不写入布局，所有pagelet执行完成，一次写入到浏览器。支持搜索引擎，用来支持那些不支持JS的客户端。</li>
+</ul>
+<h2 id="生命周期">生命周期</h2><p>bigview的生命周期</p>
 <ul>
 <li>before</li>
 <li>.then(this.beforeRenderLayout.bind(this))</li>
