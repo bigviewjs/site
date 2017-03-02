@@ -1,4 +1,4 @@
-## Version
+## Versions
 
 - v1.3.9
 	- [x] 使用bluebird作为global.Promise，避免外部错误

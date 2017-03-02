@@ -142,6 +142,49 @@
                         
                         
                         
+                        
+                        
+                            <li >
+                                <a href="#index.js">index.js</a>
+                            </li>
+                        
+                        
+                        
+                        
+                        
+                            <li >
+                                <a href="#const.js">const.js</a>
+                            </li>
+                        
+                        
+                        
+                        
+                        
+                            <li >
+                                <a href="#parse.js">parse.js</a>
+                            </li>
+                        
+                        
+                        
+                        
+                        
+                            <li >
+                                <a href="#tpl/index.handlebars">tpl/index.handlebars</a>
+                            </li>
+                        
+                        </ul>
+                        
+                        
+                        
+                        
+                        <!-- <li  > -->
+                        <li >
+                            
+                            <a href="#启动和部署">启动和部署</a>
+                            
+                        </li>
+                        
+                        
                     </ul>
                   </nav>
               </div>
@@ -201,18 +244,18 @@ module.exports = function(req, res) {
 </code></pre>
 <p>创建多个模块</p>
 <pre><code class="lang-bash">$ bpm a b c
-generate ~/a/MyPagelet.js
-generate ~/a/index.html
-generate ~/a/index.js
-generate ~/a/req.js
-generate ~/b/MyPagelet.js
-generate ~/b/index.html
-generate ~/b/index.js
-generate ~/b/req.js
-generate ~/c/MyPagelet.js
-generate ~/c/index.html
-generate ~/c/index.js
-generate ~/c/req.js
+copy tpl /bigview_site/test/a/tpl
+copy tpl /bigview_site/test/b/tpl
+copy tpl /bigview_site/test/c/tpl
+generate /bigview_site/test/a/const.js
+generate /bigview_site/test/b/const.js
+generate /bigview_site/test/c/const.js
+generate /bigview_site/test/a/parse.js
+generate /bigview_site/test/a/index.js
+generate /bigview_site/test/b/index.js
+generate /bigview_site/test/b/parse.js
+generate /bigview_site/test/c/parse.js
+generate /bigview_site/test/c/index.js
 </code></pre>
 <h3 id="模块目录">模块目录</h3><pre><code>$ tree bpmodules/detail/header 
 bpmodules/detail/header
@@ -230,6 +273,49 @@ bpmodules/detail/header
 <li>parse.js用于解析数据，用于etl数据处理（抽取、转换、加载、清洗）</li>
 <li>tpl是防止模板的目录，默认biglet使用的是tpl/index</li>
 </ul>
+<h3 id="index.js">index.js</h3><pre><code>&#39;use strict&#39;
+
+const Pagelet = require(&#39;biglet&#39;)
+
+module.exports = class QPagelet extends Pagelet {
+  constructor() {
+    super()
+    this.root = __dirname
+    this.domid = &#39;a&#39;
+  }
+
+  fetch() {
+    return Promise.resolve()
+  }
+
+  parse() {
+      return Promise.resolve()
+  }
+}
+</code></pre><h3 id="const.js">const.js</h3><pre><code>&#39;use strict&#39;;
+
+module.exports = {
+    &quot;changeStatus&quot; : {
+        &#39;CHANGING&#39;: 40,
+        &#39;CHANGE_DONE&#39;: 42
+    }
+};
+</code></pre><h3 id="parse.js">parse.js</h3><pre><code>&#39;use strict&#39;;
+
+const { changeStatus } = require(&#39;./const&#39;);
+const { CHANGING, CHANGE_DONE} = changeStatus;
+
+module.exports = function(pagelet) {
+    let data = {
+      a:1
+    };
+
+    return Promise.resolve(data);
+};
+</code></pre><h3 id="tpl/index.handlebars">tpl/index.handlebars</h3><pre><code>&lt;div class=&quot;m-warp m-line&quot;&gt;
+    &lt;h1&gt; hello world &lt;/h1&gt;
+&lt;/div&gt;
+</code></pre><h2 id="启动和部署">启动和部署</h2><p>由于项目是express项目，只是view变成了bigview，所以启动和部署都和express一模一样。</p>
 
               </div>
           </div>

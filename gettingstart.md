@@ -76,18 +76,18 @@ $ npm i -g bigview-cli
 
 ```bash
 $ bpm a b c
-generate ~/a/MyPagelet.js
-generate ~/a/index.html
-generate ~/a/index.js
-generate ~/a/req.js
-generate ~/b/MyPagelet.js
-generate ~/b/index.html
-generate ~/b/index.js
-generate ~/b/req.js
-generate ~/c/MyPagelet.js
-generate ~/c/index.html
-generate ~/c/index.js
-generate ~/c/req.js
+copy tpl /bigview_site/test/a/tpl
+copy tpl /bigview_site/test/b/tpl
+copy tpl /bigview_site/test/c/tpl
+generate /bigview_site/test/a/const.js
+generate /bigview_site/test/b/const.js
+generate /bigview_site/test/c/const.js
+generate /bigview_site/test/a/parse.js
+generate /bigview_site/test/a/index.js
+generate /bigview_site/test/b/index.js
+generate /bigview_site/test/b/parse.js
+generate /bigview_site/test/c/parse.js
+generate /bigview_site/test/c/index.js
 ```
 
 ### 模块目录
@@ -112,3 +112,75 @@ bpmodules/detail/header
 - tpl是防止模板的目录，默认biglet使用的是tpl/index
 
 ### index.js
+
+```
+'use strict'
+
+const Pagelet = require('biglet')
+
+module.exports = class QPagelet extends Pagelet {
+  constructor() {
+    super()
+    this.root = __dirname
+    this.domid = 'a'
+  }
+
+  fetch() {
+    return Promise.resolve()
+  }
+  
+  parse() {
+      return Promise.resolve()
+  }
+}
+
+```
+
+### const.js
+
+```
+'use strict';
+
+module.exports = {
+    "changeStatus" : {
+        'CHANGING': 40,
+        'CHANGE_DONE': 42
+    }
+};
+```
+
+### parse.js
+
+```
+'use strict';
+
+const { changeStatus } = require('./const');
+const { CHANGING, CHANGE_DONE} = changeStatus;
+
+module.exports = function(pagelet) {
+    let data = {
+      a:1
+    };
+
+    return Promise.resolve(data);
+};
+
+```
+
+### tpl/index.handlebars
+
+
+```
+<div class="m-warp m-line">
+	<h1> hello world </h1>
+</div>
+
+```
+
+## 启动和部署
+
+由于项目是express项目，只是view变成了bigview，所以启动和部署都和express一模一样。
+
+## 下面就开始你的项目吧
+
+有任何问题请issue
