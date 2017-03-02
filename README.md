@@ -1,6 +1,3 @@
-# bigview
-
-> A fast, simple & powerful bigpipe framework
 
 ## 特性
 
@@ -23,3 +20,10 @@
 - 支持子pagelet，无限级嵌套
 - 支持根据条件渲染模板，延时输出布局
 - bigview支持错误模块显示，仅限于布局之前
+
+## 感谢
+
+- 冯地木
+- 张凯
+- 张代应
+- 陈愉镔

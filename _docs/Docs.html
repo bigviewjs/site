@@ -87,6 +87,24 @@
                   
                   
                   <li>
+                      <a href="#生命周期">生命周期</a>
+                  </li>
+                  
+                  
+                  
+                  
+                  <ul class="nav docs-sidenav-extend">
+                  
+                      <li>
+                          <a href="#生命周期">生命周期</a>
+                      </li>
+                  
+                  </ul>
+                  
+                  
+                  
+                  
+                  <li>
                       <a href="#概念">概念</a>
                   </li>
                   
@@ -99,14 +117,14 @@
                           <a href="#说明">说明</a>
                       </li>
                   
+                  </ul>
                   
                   
                   
                   
-                      <li>
-                          <a href="#高级">高级</a>
-                      </li>
-                  
+                  <li>
+                      <a href="#高级">高级</a>
+                  </li>
                   
                   
                 </ul>
@@ -134,6 +152,47 @@
               <div class="docs-section">
                   
                   
+                  <h2 id="生命周期" class="page-header">生命周期</h2>
+                  
+                  
+                  
+                  <div>
+                      <h2 id="生命周期">生命周期</h2><p>bigview的生命周期</p>
+<ul>
+<li>before</li>
+<li>.then(this.beforeRenderLayout.bind(this))</li>
+<li>.then(this.renderLayout.bind(this))</li>
+<li>.then(this.afterRenderLayout.bind(this))</li>
+<li>.then(this.beforeRenderPagelets.bind(this))</li>
+<li>.then(this.renderPagelets.bind(this))</li>
+<li>.then(this.afterRenderPagelets.bind(this)</li>
+<li>end</li>
+</ul>
+<p>bigview的生命周期精简</p>
+<ul>
+<li>before</li>
+<li>renderLayout</li>
+<li>renderPagelets</li>
+<li>end</li>
+</ul>
+<p>biglet的生命周期</p>
+<ul>
+<li>before</li>
+<li>.then(self.fetch.bind(self))</li>
+<li>.then(self.parse.bind(self))</li>
+<li>.then(self.render.bind(self))</li>
+<li>end</li>
+</ul>
+
+                  </div>
+                  
+              </div>
+              
+              
+              
+              <div class="docs-section">
+                  
+                  
                   <h2 id="概念" class="page-header">概念</h2>
                   
                   
@@ -142,12 +201,21 @@
               
               
               
+              <div class="docs-section">
+                  
+                  
+                  <h3 id="说明" class="page-header">说明</h3>
+                  
+                  
+                  
+              </div>
+              
               
               
               <div class="docs-section">
                   
                   
-                  <h3 id="高级" class="page-header">高级</h3>
+                  <h2 id="高级" class="page-header">高级</h2>
                   
                   
                   
