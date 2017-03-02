@@ -21,7 +21,7 @@ gulp.task('generate', function () {
 })
 
 gulp.task('show', ['generate'], function () {
-  if (exec('hs _docs -o').code !== 0) {
+  if (exec('browser-sync start --server _docs --open --no-notify').code !== 0) {
 	  echo('Error: generate.sh exec failed')
 	  exit(1)
 	}
