@@ -111,3 +111,4 @@ bpmodules/detail/header
 - parse.js用于解析数据，用于etl数据处理（抽取、转换、加载、清洗）
 - tpl是防止模板的目录，默认biglet使用的是tpl/index
 
+### index.js
