@@ -1,4 +1,14 @@
-## 安装
+## 开发过程概览
+
+1. 编写静态页面
+1. 根据静态页面和功能切分模块，并决定采用的视图渲染模式
+1. 准备项目目录，并编写具体模块
+1. QA+测试
+1. 部署
+
+了解开发过程，提前做好准备工作，避免项目里的反复，下面就跟着我一起开始bigview入门吧
+
+## 安装bigview
 
 ```bash
 $ npm i -S bigview
@@ -79,3 +89,25 @@ generate ~/c/index.html
 generate ~/c/index.js
 generate ~/c/req.js
 ```
+
+### 模块目录
+
+```
+$ tree bpmodules/detail/header 
+bpmodules/detail/header
+├── const.js
+├── index.js
+├── parse.js
+└── tpl
+    └── index.handlebars
+
+1 directory, 4 files
+```
+
+说明
+
+- index.js是入口，继承biglet
+- const.js用于定义常量
+- parse.js用于解析数据，用于etl数据处理（抽取、转换、加载、清洗）
+- tpl是防止模板的目录，默认biglet使用的是tpl/index
+
