@@ -91,7 +91,7 @@
                         <!-- <li  > -->
                         <li >
                             
-                            <a href="#安装">安装</a>
+                            <a href="#开发过程概览">开发过程概览</a>
                             
                         </li>
                         
@@ -100,9 +100,46 @@
                         <!-- <li  > -->
                         <li >
                             
-                            <a href="#Scaffold">Scaffold</a>
+                            <a href="#安装bigview">安装bigview</a>
                             
                         </li>
+                        
+                        
+                        
+                        <!-- <li  > -->
+                        <li >
+                            
+                            <a href="#路由定义">路由定义</a>
+                            
+                        </li>
+                        
+                        
+                        
+                        <!-- <li  > -->
+                        <li >
+                            
+                            <a href="#创建bigview对象">创建bigview对象</a>
+                            
+                        </li>
+                        
+                        
+                        
+                        <!-- <li  > -->
+                        <li >
+                            
+                            <a href="#创建模块">创建模块</a>
+                            
+                        </li>
+                        
+                        
+                        
+                        
+                        <ul class="nav docs-sidenav-extend"  >
+                        
+                            <li >
+                                <a href="#模块目录">模块目录</a>
+                            </li>
+                        
                         
                         
                     </ul>
@@ -111,12 +148,58 @@
               <div class="content-right markdown-body" role="main">
 
                 
-                <h2 id="安装">安装</h2><pre><code class="lang-bash">$ <span class="token function">npm</span> i -S bigview
+                <h2 id="开发过程概览">开发过程概览</h2><ol>
+<li>编写静态页面</li>
+<li>根据静态页面和功能切分模块，并决定采用的视图渲染模式</li>
+<li>准备项目目录，并编写具体模块</li>
+<li>QA+测试</li>
+<li>部署</li>
+</ol>
+<p>了解开发过程，提前做好准备工作，避免项目里的反复，下面就跟着我一起开始bigview入门吧</p>
+<h2 id="安装bigview">安装bigview</h2><pre><code class="lang-bash">$ <span class="token function">npm</span> i -S bigview
 </code></pre>
-<h2 id="Scaffold">Scaffold</h2><p>Install </p>
+<h2 id="路由定义">路由定义</h2><p>采用express的路由定义方式</p>
+<pre><code class="lang-js">router<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'/some_url'</span><span class="token punctuation">,</span>
+    <span class="token function">auth</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//检查权限</span>
+    <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'../bpmodules/detail'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h2 id="创建bigview对象">创建bigview对象</h2><p>代码位于<code>/bpmodules/detail/index.js</code>，内容如下：</p>
+<pre><code>&#39;use strict&#39;;
+
+const BigView = require(&#39;bigview&#39;);
+
+module.exports = function(req, res) {
+    let bigview = new BigView(req, res,
+        &#39;pages/detail/index&#39;, {
+            title: &quot;国内机票-去哪儿网Qunar.com&quot;
+        });
+
+    bigview.add(require(&#39;./header&#39;));
+    bigview.add(require(&#39;./menu&#39;));
+    bigview.add(require(&#39;./zzz&#39;));
+    bigview.add(require(&#39;./yyy&#39;));
+    bigview.add(require(&#39;./xxx&#39;));
+    bigview.add(require(&#39;./sidebar&#39;));
+    bigview.add(require(&#39;./footer&#39;));
+
+    bigview.addErrorPagelet(require(&#39;./error&#39;));
+
+    bigview.start();
+}
+</code></pre><p>要点说明</p>
+<ol>
+<li>创建bigview对象，可以是BigView或者BigView子类的实例化对象</li>
+<li>通过bigview.add方法增加模块</li>
+<li>通过bigview.addErrorPagelet方法增加出错显示的模块</li>
+<li>通过bigview.start()来开始渲染视图</li>
+</ol>
+<blockquote>
+<p>说明：bigview支持5种渲染模式 pipeline | parallel | reduce | reducerender | render，默认是采用是性能最好的pipeline模式，如果需要可以通过bigview.mode来设置。</p>
+</blockquote>
+<h2 id="创建模块">创建模块</h2><p>安装脚手架</p>
 <pre><code class="lang-bash">$ <span class="token function">npm</span> i -g bigview-cli
 </code></pre>
-<p>Usages</p>
+<p>创建多个模块</p>
 <pre><code class="lang-bash">$ bpm a b c
 generate ~/a/MyPagelet.js
 generate ~/a/index.html
@@ -131,6 +214,22 @@ generate ~/c/index.html
 generate ~/c/index.js
 generate ~/c/req.js
 </code></pre>
+<h3 id="模块目录">模块目录</h3><pre><code>$ tree bpmodules/detail/header 
+bpmodules/detail/header
+├── const.js
+├── index.js
+├── parse.js
+└── tpl
+    └── index.handlebars
+
+1 directory, 4 files
+</code></pre><p>说明</p>
+<ul>
+<li>index.js是入口，继承biglet</li>
+<li>const.js用于定义常量</li>
+<li>parse.js用于解析数据，用于etl数据处理（抽取、转换、加载、清洗）</li>
+<li>tpl是防止模板的目录，默认biglet使用的是tpl/index</li>
+</ul>
 
               </div>
           </div>

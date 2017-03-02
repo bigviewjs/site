@@ -114,6 +114,14 @@
                   <ul class="nav docs-sidenav-extend">
                   
                       <li>
+                          <a href="#概念">概念</a>
+                      </li>
+                  
+                  
+                  
+                  
+                  
+                      <li>
                           <a href="#说明">说明</a>
                       </li>
                   
@@ -125,6 +133,24 @@
                   <li>
                       <a href="#高级">高级</a>
                   </li>
+                  
+                  
+                  
+                  
+                  <ul class="nav docs-sidenav-extend">
+                  
+                      <li>
+                          <a href="#扩展bigview">扩展bigview</a>
+                      </li>
+                  
+                  
+                  
+                  
+                  
+                      <li>
+                          <a href="#扩展biglet">扩展biglet</a>
+                      </li>
+                  
                   
                   
                 </ul>
@@ -197,6 +223,10 @@
                   
                   
                   
+                  <div>
+                      <h2 id="概念">概念</h2>
+                  </div>
+                  
               </div>
               
               
@@ -218,6 +248,44 @@
                   <h2 id="高级" class="page-header">高级</h2>
                   
                   
+                  
+                  <div>
+                      <h2 id="扩展bigview">扩展bigview</h2><p>主要是根据bigview的生命周期来实现某种功能</p>
+<pre><code>&#39;use strict&#39;;
+
+const BigView = require(&#39;bigview&#39;);
+
+module.exports = class QBigView extends BigView {
+    afterRenderLayout(data) {
+        ....
+    }
+}
+</code></pre><h2 id="扩展biglet">扩展biglet</h2><pre><code>&#39;use strict&#39;
+
+const Pagelet = require(&#39;biglet&#39;);
+
+module.exports = class MyPagelet extends Pagelet {
+    constructor() {
+        super();
+        this.root = __dirname;
+        this.domid = &#39;reimburse&#39;;
+    }
+
+    parse() {
+        let pagelet = this;
+        return new Promise(function(resolve, reject) {
+            return parse(pagelet).then(function (data) {
+                resolve(pagelet.data = data);
+            });
+        });
+    }
+
+    fetch() {
+        ... 
+    };
+}
+</code></pre>
+                  </div>
                   
               </div>
               
