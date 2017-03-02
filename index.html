@@ -82,11 +82,62 @@
       <div class="ydoc-container">
         
           
-          <div class="ydoc-container-content" id="readme">
-              <article class="markdown-body">
-                  
-                  <h1 id="bigview">bigview</h1>
-              </article>
+          <div class="ydoc-container-content">
+              <div class="content-left" role="complementary">
+                  <nav class="docs-sidebar hidden-print hidden-xs hidden-sm">
+                    <ul class="nav docs-sidenav">
+                        
+                        
+                        <!-- <li  > -->
+                        <li >
+                            
+                            <a href="#特性">特性</a>
+                            
+                        </li>
+                        
+                        
+                        
+                        <!-- <li  > -->
+                        <li >
+                            
+                            <a href="#功能点">功能点</a>
+                            
+                        </li>
+                        
+                        
+                    </ul>
+                  </nav>
+              </div>
+              <div class="content-right markdown-body" role="main">
+
+                
+                <h1 id="bigview">bigview</h1><blockquote>
+<p>A fast, simple &amp; powerful bigpipe framework</p>
+</blockquote>
+<h2 id="特性">特性</h2><ul>
+<li>模块化</li>
+<li>具有测试性</li>
+<li>支持mock数据</li>
+<li>生成html片段（便于对比）</li>
+<li>提供Scaffold（bigview-cli）</li>
+<li>提供调试UI（bigconsole）</li>
+</ul>
+<h2 id="功能点">功能点</h2><ul>
+<li>支持静态布局和动态布局</li>
+<li>支持5种bigpipe渲染模式<ul>
+<li>parallel.js   并行模式， 先写布局，并行请求，但在获得所有请求的结果后再渲染</li>
+<li>pipeline.js  (默认) 管线模式：即并行模式， 先写布局，并行请求，并即时渲染</li>
+<li>reduce.js    顺序模式： 先写布局，按照pagelet加入顺序，依次执行，写入</li>
+<li>reducerender.js 先写布局，然后顺序执行，在获得所有请求的结果后再渲染</li>
+<li>render.js 一次渲染模式：即普通模式，不写入布局，所有pagelet执行完成，一次写入到浏览器。支持搜索引擎，用来支持那些不支持JS的客户端。</li>
+</ul>
+</li>
+<li>支持子pagelet，无限级嵌套</li>
+<li>支持根据条件渲染模板，延时输出布局</li>
+<li>bigview支持错误模块显示，仅限于布局之前</li>
+</ul>
+
+              </div>
           </div>
           
         
@@ -101,6 +152,8 @@
       </footer>
     </div>
 
+    
+       <div class="open-panel"></div>
     
     
 
