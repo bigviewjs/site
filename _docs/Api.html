@@ -198,6 +198,28 @@
                   
                   
                   
+                  <div>
+                      <h2 id="介绍">介绍</h2><p><a href="https://github.com/bigviewjs/bigview.js">https://github.com/bigviewjs/bigview.js</a></p>
+<p>针对bigview前端优化，参考微博的方式</p>
+<h2 id="使用">使用</h2><p>在布局模板里引入bigpipe.js即可</p>
+<h2 id="生命周期">生命周期</h2><ul>
+<li>bigview.ready</li>
+<li>bigview.view</li>
+<li>bigview.end</li>
+</ul>
+<h2 id="事件">事件</h2><ul>
+<li>pageletArrive：当pagelet到达页面的时候，触发bigview默认的pageletArrive</li>
+<li>domid事件</li>
+</ul>
+<pre><code>var loaded_modules = [];
+
+bigview.on(&#39;pageletArrive&#39;, function(payload) {
+    loaded_modules.push({&#39;domid&#39;: payload.domid})
+});
+</code></pre><p>可以在页面中获取加载的模块顺序，继而完成某些功能，比如根据页面加载模块，显示右侧导航等。</p>
+
+                  </div>
+                  
               </div>
               
               
