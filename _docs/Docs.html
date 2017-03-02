@@ -170,6 +170,22 @@
                   <ul class="nav docs-sidenav-extend">
                   
                       <li>
+                          <a href="#bigview">bigview</a>
+                      </li>
+                  
+                  
+                  
+                  
+                  
+                      <li>
+                          <a href="#biglet即pagelet">biglet即pagelet</a>
+                      </li>
+                  
+                  
+                  
+                  
+                  
+                      <li>
                           <a href="#渲染模式">渲染模式</a>
                       </li>
                   
@@ -543,7 +559,17 @@ app<span class="token punctuation">.</span><span class="token function">listen</
                   
                   
                   <div>
-                      <h2 id="渲染模式">渲染模式</h2><p>支持5种bigpipe渲染模式</p>
+                      <h2 id="bigview">bigview</h2><p>针对视图渲染和模块进行的封装，主要用于管理模块和提供生命周期回调。</p>
+<h2 id="biglet即pagelet">biglet即pagelet</h2><p>biglet是pagelet的别名，提供了生命周期封装，包括before、fetch、parse、end等，这样更加便于组装带有http接口请求的模块。</p>
+<p>由于bigpipe的特点，在特别大的页面里，返回数据优先渲染，保证首屏渲染速度，并且在某些情况下，可以允许某些模块因网络请求或者其他原因的延时显示，甚至不显示也没有问题。</p>
+<p>如果模块设计的好</p>
+<ul>
+<li>无依赖</li>
+<li>可以进行独立发布和测试</li>
+<li>模块可以有子模块</li>
+</ul>
+<p>无论出于哪种考虑，biglet都可以非常好的支持。</p>
+<h2 id="渲染模式">渲染模式</h2><p>支持5种bigpipe渲染模式</p>
 <ul>
 <li>parallel.js   并行模式， 先写布局，并行请求，但在获得所有请求的结果后再渲染</li>
 <li>pipeline.js  (默认) 管线模式：即并行模式， 先写布局，并行请求，并即时渲染</li>
