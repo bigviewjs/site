@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <meta name="format-detection" content="telephone=no,email=no" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge, chrome=1">
+  <meta name="description" content="description of your site">
+  <meta name="author" content="author of the site">
+  <title>Bigview 主页</title>
+  <link rel="stylesheet" href="source/main.css"/>
+  
+  
+    
+        <link rel="stylesheet" href="./style/a.css"/>
+    
+        <link rel="stylesheet" href="./style/b.css"/>
+    
+  
+</head>
+<body class=index >
+    <div class="ydoc">
+      <header class="ydoc-header">
+        <div class="ydoc-header-area">
+            
+            <a href="http://ued.qunar.com/ymfe/" class="navbar-brand">YMFE</a>
+            
+            <button class="ydocIcon navbar-toggle">&#xf020;</button>
+            <nav class="ydoc-nav">
+              <ul class="navbar-left">
+                
+                    
+                    <li class="active">
+                        
+                        <a href="index.html">主页</a>
+                        
+                    </li>
+                    
+                    <li class="">
+                        
+                        <a href="GettingStart.html">开始</a>
+                        
+                    </li>
+                    
+                    <li class="">
+                        
+                        <a href="Docs.html">文档</a>
+                        
+                    </li>
+                    
+                    <li class="">
+                        
+                        <a href="Api.html">Api</a>
+                        
+                    </li>
+                    
+                    <li class="">
+                        
+                        <a href="News.html">新闻</a>
+                        
+                    </li>
+                    
+                
+              </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- <header style="height:20px"></header> -->
+    
+      <!-- Docs page layout -->
+      
+      <div class="ydoc-banner-bg">
+          <div class="ydoc-banner">
+              <div class="ydoc-banner-area">
+                  <h1>Bigview</h1>
+                  <p>A fast, simple & powerful bigpipe framework</p>
+              </div>
+          </div>
+      
+
+      <div class="ydoc-container">
+        
+          
+          <div class="ydoc-container-content" id="readme">
+              <article class="markdown-body">
+                  
+                  <h1 id="bigview">bigview</h1>
+              </article>
+          </div>
+          
+        
+      </div>
+     
+     </div>
+     
+      <footer class="footer">
+        <div class="copyright">
+            &copy; 2016 <a href="http://ued.qunar.com/ymfe/">YMFE</a> Team. Build by <a href="http://ued.qunar.com/ydoc/">ydoc</a>.
+        </div>
+      </footer>
+    </div>
+
+    
+    
+
+    <script src="source/main.js"></script>
+    <script src="source/app.js"></script>
+    
+    <script>
+        var lineHeight = 17.4;
+        var EXAMPLE_MAX_HEIGHT;
+        function fold(){
+            // 折叠code
+            $('.markdown-body pre').css({"line-height": lineHeight+"px"});
+            $('.markdown-body pre').map(function(i,item){
+                var $item = $(item);
+                var foldnumber = $item.data('foldnumber');
+                EXAMPLE_MAX_HEIGHT = lineHeight * (foldnumber || 6);
+                if($item.height() >EXAMPLE_MAX_HEIGHT){
+                    $item.css({ "padding-bottom":30 });
+                    $item.find('code').height(EXAMPLE_MAX_HEIGHT);
+                    $item.append('<span class="extend">展开更多……</span>');
+                };
+            });
+           $('.ydoc-example').delegate('.extend','click',function(){
+                var $this = $(this);
+                $this.removeClass('extend').addClass('fold');
+                $this.html('折叠代码');
+                $this.prev().height('auto');
+                $this.prev().parent().height('auto');
+            });
+            $('.ydoc-example').delegate('.fold','click',function(){
+                var $this = $(this);
+                var foldnumber = $this.parent().data('foldnumber');
+                EXAMPLE_MAX_HEIGHT = lineHeight * (foldnumber || 6);
+                $this.removeClass('fold').addClass('extend');
+                $this.parent().height(EXAMPLE_MAX_HEIGHT);  // pre
+                $this.prev().height(EXAMPLE_MAX_HEIGHT);    // code
+                $this.html("展开更多……");
+            });
+        }
+        $(document).ready(fold);
+    </script>
+    
+    
+    <script>
+    var DEFAULT_SHOW_PARAMS = 5;
+    $(document).ready(function() {
+        // 参数默认显示 5个
+        $(".docs-table tbody").each(function(){
+           var paramsLength = $(this).find('tr').length,
+               paramsArray = $(this).find('tr'),
+               curTbody = $(this).parents('.docs-table');
+
+           if(paramsLength > DEFAULT_SHOW_PARAMS){
+               curTbody.append('<span class="extend-params">展开更多参数……</span>');
+               paramsArray.each(function(index,item){
+                   if(index >= DEFAULT_SHOW_PARAMS ){
+                       $(this).removeClass('hide-params').addClass('hide-params');
+                   }
+               });
+           }
+        });
+        $(".docs-table").delegate('.extend-params', 'click',function(){
+            $(this).parents('.docs-table').find('.hide-params').addClass('show-params');
+            $(this).removeClass('extend-params').addClass('fold-params');
+            $(this).html('折叠参数');
+        });
+        $('.docs-table').delegate('.fold-params','click',function(){
+            $(this).removeClass('fold-params').addClass('extend-params');
+             $(this).parents('.docs-table').find('.show-params').removeClass('show-params');
+            $(this).html("展开更多参数……");
+        });
+    });
+    </script>
+    
+
+    
+    <script>
+        $(document).ready(function(){
+            var winWidth = $(window).width(),
+                $navExtend = $('.docs-sidenav-extend'),
+                $contentLeft = $('.content-left');
+
+            changeHide();
+            $(window).on('resize',function(){
+                winWidth = $(window).width();
+                changeHide();
+            })
+            function changeHide(){
+                if(winWidth>767){
+                    var activeInit = $contentLeft.find('.active');
+                    $navExtend.hide();
+                    $(window).on('scroll',function(){
+                        var activeChange = $contentLeft.find('.active');
+                        if(activeChange[0] && activeInit !== activeChange){
+                            activeInit = activeChange;
+                            $navExtend.hide();
+                            if(activeChange.parent()[0].tagName === 'UL'){
+                                if(activeChange.next()[0] && activeChange.parent()[0].className === 'nav docs-sidenav' && activeChange.next()[0].tagName === 'UL'){
+                                    activeChange.next().show();
+                                }else if (activeChange.parent()[0].className === 'nav docs-sidenav-extend') {
+                                    activeChange.parent().show();
+                                }
+                            }
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+    
+
+    
+    
+      
+      <script type="text/javascript" src="./scripts/a.js"></script>
+      
+    
+
+</body>
+</html>
