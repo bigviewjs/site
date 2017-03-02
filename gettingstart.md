@@ -1,6 +1,6 @@
 ## 安装
 
-```
+```shell
 $ npm i -S bigview
 ```
 
@@ -8,13 +8,13 @@ $ npm i -S bigview
 
 Install 
 
-```
+```shell
 $ npm i -g bigview-cli
 ```
 
 Usages
 
-```
+```shell
 $ bpm a b c
 generate ~/a/MyPagelet.js
 generate ~/a/index.html
