@@ -91,7 +91,7 @@
                         <!-- <li  > -->
                         <li >
                             
-                            <a href="#特性">特性</a>
+                            <a href="#Version">Version</a>
                             
                         </li>
                         
@@ -100,9 +100,35 @@
                         <!-- <li  > -->
                         <li >
                             
-                            <a href="#功能点">功能点</a>
+                            <a href="#Desgin">Desgin</a>
                             
                         </li>
+                        
+                        
+                        
+                        
+                        <ul class="nav docs-sidenav-extend"  >
+                        
+                            <li >
+                                <a href="#v1">v1</a>
+                            </li>
+                        
+                        
+                        
+                        
+                        
+                            <li >
+                                <a href="#v2">v2</a>
+                            </li>
+                        
+                        
+                        
+                        
+                        
+                            <li >
+                                <a href="#v3">v3</a>
+                            </li>
+                        
                         
                         
                     </ul>
@@ -111,30 +137,68 @@
               <div class="content-right markdown-body" role="main">
 
                 
-                <h1 id="bigview">bigview</h1><blockquote>
-<p>A fast, simple &amp; powerful bigpipe framework</p>
-</blockquote>
-<h2 id="特性">特性</h2><ul>
-<li>模块化</li>
-<li>具有测试性</li>
-<li>支持mock数据</li>
-<li>生成html片段（便于对比）</li>
-<li>提供Scaffold（bigview-cli）</li>
-<li>提供调试UI（bigconsole）</li>
-</ul>
-<h2 id="功能点">功能点</h2><ul>
-<li>支持静态布局和动态布局</li>
-<li>支持5种bigpipe渲染模式<ul>
-<li>parallel.js   并行模式， 先写布局，并行请求，但在获得所有请求的结果后再渲染</li>
-<li>pipeline.js  (默认) 管线模式：即并行模式， 先写布局，并行请求，并即时渲染</li>
-<li>reduce.js    顺序模式： 先写布局，按照pagelet加入顺序，依次执行，写入</li>
-<li>reducerender.js 先写布局，然后顺序执行，在获得所有请求的结果后再渲染</li>
-<li>render.js 一次渲染模式：即普通模式，不写入布局，所有pagelet执行完成，一次写入到浏览器。支持搜索引擎，用来支持那些不支持JS的客户端。</li>
+                <h2 id="Version">Version</h2><ul>
+<li>v1.3.9<ul>
+<li>[x] 使用bluebird作为global.Promise，避免外部错误</li>
+<li>[x] 去掉bigpipe.debug = false;使用环境变量BIGVIEW_DEBUG</li>
+<li>[x] bigview &amp;&amp; biglet conosle.log(&quot;BIGVIEW&quot; + err) 增加模块标识，便于日志记录</li>
+<li>[x] this.tpl = &#39;tpl/index&#39;;干掉，设为默认值</li>
+<li>[x] biglet // custom error function</li>
+<li>[x] 子模块的顺序，也可以指定pagelet1.mode = &#39;render&#39;</li>
+<li>[x] 修复之前mode遗留问题，以前的render模式，仍然是先输出布局的，这是不对的，已修改</li>
+<li>(待处理)this.root = __dirname;有疑问？暂无解决方案，需要思考</li>
+<li>(待处理)当没有数据的时候，不显示改模块，目前的做法是 return Promise.reject(); 语义上怪</li>
 </ul>
 </li>
-<li>支持子pagelet，无限级嵌套</li>
-<li>支持根据条件渲染模板，延时输出布局</li>
+<li>v1.2.8 (2017年1月11日，i5ting)<ul>
 <li>bigview支持错误模块显示，仅限于布局之前</li>
+<li>Pagelet里触发其他模块</li>
+</ul>
+</li>
+</ul>
+<h2 id="Desgin">Desgin</h2><h3 id="v1">v1</h3><ul>
+<li>实现基本功能(pipeline管线模式)</li>
+</ul>
+<h3 id="v2">v2</h3><ul>
+<li>pipeline管线模式</li>
+<li>多种布局</li>
+<li>实现pagelet嵌套</li>
+<li>生命周期回调</li>
+</ul>
+<h3 id="v3">v3</h3><ul>
+<li>增加3种模式mode</li>
+<li>考虑加入<a href="https://github.com/hapijs/joi">joi</a>,对pagelet.data进行校验</li>
+<li>采用eventemitter收集数据，self.ower.emit()，可以兼顾内嵌pagelet</li>
+<li>子流程其实也可以考虑顺序或并行，只是意义多大</li>
+</ul>
+<p>BigPipe的三种模式：</p>
+<ul>
+<li>common一次渲染模式：即普通模式，支持搜索引擎，用来支持那些不支持JS的客户端。</li>
+<li>并行<ul>
+<li>pipeline管线模式：即并行模式，并行请求，并即时渲染。(已实现)</li>
+<li>parallel并行模式：并行请求，但在获得所有请求的结果后再渲染。</li>
+</ul>
+</li>
+</ul>
+<p>维度</p>
+<ul>
+<li>依次Promise.reduce</li>
+<li>随机Promise.all</li>
+<li>写入</li>
+<li>不写入（暂存，稍后一起写入）</li>
+</ul>
+<p>可能性</p>
+<ul>
+<li>依次写入（性能第3）</li>
+<li>依次不写入（性能第4）</li>
+<li>随机写入（性能第1）</li>
+<li>随机不写入（性能第2）</li>
+</ul>
+<p>核心流程</p>
+<ul>
+<li>布局：是否立即写入</li>
+<li>pagelets处理：各种bp模式</li>
+<li>end：检查缓存，并end结束</li>
 </ul>
 
               </div>
