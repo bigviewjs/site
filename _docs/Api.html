@@ -110,7 +110,23 @@
                   <ul class="nav docs-sidenav-extend">
                   
                       <li>
+                          <a href="#生命周期">生命周期</a>
+                      </li>
+                  
+                  
+                  
+                  
+                  
+                      <li>
                           <a href="#子模块">子模块</a>
+                      </li>
+                  
+                  
+                  
+                  
+                  
+                      <li>
+                          <a href="#自定义payload">自定义payload</a>
                       </li>
                   
                   </ul>
@@ -170,16 +186,65 @@
                   
                   
                   
-              </div>
-              
-              
-              
-              <div class="docs-section">
-                  
-                  
-                  <h3 id="子模块" class="page-header">子模块</h3>
-                  
-                  
+                  <div>
+                      <h2 id="生命周期">生命周期</h2><ul>
+<li>before 准备或预处理</li>
+<li>fetch 网络请求</li>
+<li>parse 解析处理数据（E抽取、T转换、L加载、C清洗）</li>
+<li>compile（不对外暴露）</li>
+<li>render（不对外暴露）</li>
+<li>end 结束前要处理</li>
+</ul>
+<p>每个生命周期都要遵循一个原则，结果必须返回promise对象，否则无法正常运行。</p>
+<h2 id="子模块">子模块</h2><pre><code class="lang-js"><span class="token string">'use strict'</span>
+
+<span class="token keyword">const</span> debug <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'debug'</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token string">'bigview'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> MyBigView <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./MyBigView'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> Biglet <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'../../../packages/biglet'</span><span class="token punctuation">)</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">var</span> bigpipe <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyBigView</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> <span class="token string">'nest/index'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> title<span class="token punctuation">:</span> <span class="token string">"测试"</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">var</span> Pagelet1 <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./p1'</span><span class="token punctuation">)</span>
+  <span class="token keyword">var</span> pagelet1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Pagelet1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+  <span class="token comment" spellcheck="true">// pipeline | parallel | reduce | reducerender | render</span>
+  pagelet1<span class="token punctuation">.</span>mode <span class="token operator">=</span> <span class="token string">'pipeline'</span>
+
+  <span class="token keyword">var</span> Pagelet2 <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./p2'</span><span class="token punctuation">)</span>
+
+  pagelet1<span class="token punctuation">.</span><span class="token function">addChild</span><span class="token punctuation">(</span>Pagelet2<span class="token punctuation">)</span>
+
+  bigpipe<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>pagelet1<span class="token punctuation">,</span>Biglet<span class="token punctuation">)</span>
+
+  <span class="token comment" spellcheck="true">// bigpipe.preview('aaaa.html')</span>
+  <span class="token comment" spellcheck="true">// bigpipe.isMock = true</span>
+  <span class="token comment" spellcheck="true">// bigpipe.previewFile = 'aaaa.html'</span>
+
+  bigpipe<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>说明</p>
+<ul>
+<li>通过pagelet1.addChild方法来增加子模块</li>
+<li>pagelet1.mode = &#39;pipeline&#39;是用来设置子模块的请求模式的，支持的和bigview的mode是一样的</li>
+</ul>
+<h2 id="自定义payload">自定义payload</h2><p>在biglet里</p>
+<pre><code class="lang-js"><span class="token keyword">this</span><span class="token punctuation">.</span>payload <span class="token operator">=</span> <span class="token punctuation">{</span>
+    a <span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    b <span class="token punctuation">:</span> <span class="token number">2</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>然后在前端</p>
+<pre><code class="lang-js">
+bigview<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'pageletArrive'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>payload<span class="token punctuation">.</span>a<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//1</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>payload<span class="token punctuation">.</span>b<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//2</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+
+                  </div>
                   
               </div>
               
