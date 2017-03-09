@@ -1,3 +1,6 @@
+
+![](images/overview.png)
+
 ## 组件
 
 - bigview（Node.js）视图的基类
